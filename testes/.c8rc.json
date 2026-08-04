@@ -1,0 +1,7 @@
+{
+  "include": ["/tmp/cobertura-chaveiro/app-inline-script.js"],
+  "all": false,
+  "allowExternal": true,
+  "reporter": ["text", "text-summary", "html", "json"],
+  "reports-dir": "/tmp/cobertura-chaveiro/relatorio"
+}

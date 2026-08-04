@@ -1,0 +1,131 @@
+====================================================================
+CONTROLE DO CHAVEIRO (MyKey) - GUIA DE ATUALIZACAO (web)
+====================================================================
+
+Use este guia para passar um chaveiro que JA ESTA RODANDO para a
+versao mais nova, SEM perder dados. Serve para qualquer versao
+anterior:
+   - quem usa a PRIMEIRA versao (antes da correcao de ativacao no
+     banco, e que ainda NAO tinha a tela de Backup);
+   - quem usa a versao DEPOIS da correcao de ativacao;
+   - quem ja esta numa versao recente.
+
+O script de atualizacao se auto-detecta: roda em todos esses casos.
+
+>> Banco NOVO (cliente que nunca instalou)? Nao e aqui.
+   Use o GUIA-INSTALACAO.txt (roda o 01-criar-banco.sql).
+
+Fluxo (faca NA ORDEM):
+   1) BACKUP   2) SQL de atualizacao   3) deploy do index
+   4) teste dos recursos   5) rollback, se der erro
+
+--------------------------------------------------------------------
+PASSO 1 - BACKUP (NUNCA pule)
+--------------------------------------------------------------------
+Faca DOIS backups antes de mexer:
+
+A) BACKUP DO BANCO
+   - Se a versao atual JA TEM a tela "Backup": entre como admin,
+     abra "Backup", exporte em JSON e guarde o arquivo.
+   - Se e a PRIMEIRA versao (SEM tela de Backup): faca o backup
+     manual pelo Supabase:
+        Supabase > Database > Backups  (se o plano tiver), OU
+        SQL Editor e rode, salvando o resultado:
+           (exporte as tabelas que importam: funcionarios, clientes,
+            chaves/produtos, servicos, transacoes, movimentacoes,
+            configuracoes, licencas)
+     Pode tambem usar o "Download" do projeto, se disponivel.
+
+B) BACKUP DO SITE (para o rollback do deploy)
+   - Guarde uma copia do index.html ATUAL (o que esta no ar agora).
+     Baixe do Netlify (Deploys > deploy atual) ou de onde voce guarda.
+   - Assim, se precisar voltar, voce reimplanta o index.html antigo.
+
+So avance quando os DOIS backups estiverem salvos.
+
+--------------------------------------------------------------------
+PASSO 2 - RODAR O SCRIPT DE ATUALIZACAO (Supabase)
+--------------------------------------------------------------------
+1. Supabase do cliente > "SQL Editor" > New query.
+2. Abra "02-atualizar-banco.sql" (do pacote), copie TUDO, cole e "Run".
+3. Deve aparecer "Success". O script:
+      - NAO apaga dados (idempotente, pode rodar de novo sem risco);
+      - cria/ajusta licenca-ativacao, equivalencias, categorias,
+        produtos (com tipo) e estoque por fonte unica;
+      - consolida tabelas duplicadas de chaves/produtos, se houver;
+      - deixa o banco na versao exigida pela versao nova do app
+        (o proprio app avisa no navegador se o banco estiver defasado).
+
+--------------------------------------------------------------------
+PASSO 3 - PUBLICAR O NOVO index.html (Netlify)
+--------------------------------------------------------------------
+1. A configuracao do Supabase agora fica no arquivo SEPARADO
+   "configuracao.js". NAO troque esse arquivo: a chave do cliente ja
+   esta la e se preserva na atualizacao.
+   >> Se o cliente ainda esta numa versao ANTIGA (que tinha a chave
+      DENTRO do index.html): crie um "configuracao.js" com a URL e a
+      chave que estao no index.html antigo dele, e leve junto.
+2. Troque SO o index.html (e leve tambem os .sql e os guias novos).
+   Publique no MESMO site do cliente (Deploys > arraste a PASTA com o
+   index.html E o configuracao.js do cliente juntos). NUNCA sobrescreva
+   o configuracao.js ja preenchido.
+3. NAO precisa configurar nada de licenca: a validacao e feita pelo
+   proprio index.html (no navegador).
+
+--------------------------------------------------------------------
+PASSO 3B - CONTINUIDADE DA ATIVACAO (importante)
+--------------------------------------------------------------------
+A versao nova confere a ativacao olhando se existe uma liberacao VALIDA na
+tabela "licencas" do Supabase (ou guardada no proprio navegador). Dois casos:
+
+- Cliente que JA ativava pelo banco (tem linha em "licencas" - ex.: quem ja
+  estava na versao com ativacao no banco): continua ativado SOZINHO. Nada a
+  fazer.
+
+- Cliente de versao ANTIGA, anterior a ativacao no banco (ex.: a primeira
+  instalacao): a tabela "licencas" pode ficar VAZIA depois da migracao. Se o
+  sistema pedir ativacao depois do deploy, e so REATIVAR uma vez (o cliente
+  manda o codigo de instalacao, voce gera a liberacao no MyKeyAtivador e
+  devolve).
+  Pra ele ja abrir ativado SEM reativar: antes do deploy, insira a linha na
+  tabela "licencas" (SQL Editor do Supabase):
+      insert into licencas (codigo_instalacao, codigo_liberacao, termo_aceito, termo_aceito_em)
+      values ('CODIGO_DE_INSTALACAO_DELE', 'CODIGO_DE_LIBERACAO_GERADO', true, now())
+      on conflict (codigo_instalacao) do nothing;
+  (o par e o mesmo que voce ja usa na ativacao normal; data_ativacao entra
+   sozinha pelo padrao da tabela.)
+
+--------------------------------------------------------------------
+PASSO 4 - TESTAR OS RECURSOS
+--------------------------------------------------------------------
+Abra o site e confira, com calma:
+   [ ] Login (admin e um operador) e o menu aparece certo por perfil.
+   [ ] PDV: vender, escolher forma de pagamento, gerar recibo.
+   [ ] Ordem de Servico: criar, imprimir recibo e orcamento.
+   [ ] Produtos: cadastrar/editar; tipo (chave/fechadura/peca/servico).
+   [ ] Categorias: criar e usar.
+   [ ] Equivalencias: consultar e editar (4 fabricantes).
+   [ ] Estoque: entrada/saida e o saldo bate.
+   [ ] Financeiro e Relatorios abrem e somam certo.
+   [ ] Backup: exportar um JSON (confirma que a tela funciona).
+
+Se tudo passou, a atualizacao esta concluida.
+
+--------------------------------------------------------------------
+PASSO 5 - ROLLBACK (somente se aparecer erro)
+--------------------------------------------------------------------
+Se algum recurso quebrar e nao der para resolver na hora, volte ao
+estado anterior:
+
+1. BANCO: restaure o backup do PASSO 1-A.
+   - Tela "Backup" > "Restaurar" (se a versao antiga tinha), OU
+   - Supabase > restaure o backup/manual que voce salvou.
+2. SITE: reimplante o index.html ANTIGO (PASSO 1-B) no mesmo site.
+3. Confirme que voltou a funcionar como antes.
+4. Anote o erro e mande para a MyKey (print + qual passo deu erro)
+   para corrigir antes de tentar de novo.
+
+REGRA DE OURO: nunca atualize sem os backups do PASSO 1. Com eles, o
+rollback e simples e nada se perde.
+
+====================================================================

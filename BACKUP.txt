@@ -1,0 +1,43 @@
+====================================================================
+CONTROLE DO CHAVEIRO (MyKey) - BACKUP DOS DADOS
+====================================================================
+
+O sistema permite fazer backup e restaurar SEM precisar entrar no
+painel do Supabase. Tudo pela tela "Backup" dentro do sistema.
+
+--------------------------------------------------------------------
+COMO FAZER BACKUP
+--------------------------------------------------------------------
+1. Entre no sistema como administrador.
+2. No menu, clique em "Backup".
+3. Escolha o formato:
+   - JSON: backup completo. E o recomendado, pois pode ser restaurado
+     pelo proprio sistema depois.
+   - Excel (.xlsx): uma planilha por tabela. Bom para conferir os dados.
+   - SQL: comandos para recriar os dados no Supabase, se precisar.
+4. O arquivo sera baixado no seu computador.
+5. Guarde esse arquivo em local seguro (pen drive, nuvem, etc.).
+
+DICA: faca backup com frequencia (ex: toda semana).
+
+--------------------------------------------------------------------
+COMO RESTAURAR UM BACKUP
+--------------------------------------------------------------------
+1. Entre no sistema como administrador.
+2. No menu, clique em "Backup".
+3. Na secao "Restaurar", selecione um arquivo de backup JSON.
+4. Confirme. Os dados do arquivo serao gravados no sistema.
+
+ATENCAO: a restauracao adiciona/atualiza os dados do arquivo.
+Faca um backup atual ANTES de restaurar, por seguranca.
+
+--------------------------------------------------------------------
+SOBRE O BACKUP AUTOMATICO DO SUPABASE
+--------------------------------------------------------------------
+IMPORTANTE: no plano GRATUITO do Supabase NAO HA backup automatico.
+O backup automatico diario so existe nos planos pagos (Pro em diante).
+
+Por isso, no plano gratuito, o backup e responsabilidade do usuario:
+use a tela "Backup" do sistema regularmente e guarde os arquivos.
+
+====================================================================

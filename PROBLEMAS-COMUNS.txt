@@ -1,0 +1,35 @@
+====================================================================
+CONTROLE DO CHAVEIRO (MyKey) - PROBLEMAS COMUNS
+====================================================================
+
+"Conectando ao servidor..." nao sai / nao loga
+- A URL e a chave do Supabase no configuracao.js podem estar erradas.
+- Confira no arquivo configuracao.js as linhas SUPABASE_URL e SUPABASE_KEY.
+- SUPABASE_URL = a "API URL" em Project Settings > Data API
+  (https://xxxxx.supabase.co). NAO e a "Database URL" do banco.
+- SUPABASE_KEY = a "Publishable key" (sb_publishable_...) em
+  Project Settings > API Keys. Em projetos antigos, a "anon public"
+  (eyJ...). NUNCA use a "Secret" / "service_role".
+
+Os dados da empresa nao aparecem no recibo
+- Va em Configuracoes e preencha/salve os dados da empresa.
+- O recibo agora le os dados atualizados a cada impressao.
+
+O recibo/orcamento abre com a pagina inteira / botoes do navegador
+- Corrigido: agora abre um documento limpo numa nova janela.
+- Se nada abrir, libere POP-UPS para o site no navegador.
+
+Aviso (notificacao) aparece em cima do recibo
+- Corrigido: avisos sao escondidos durante a impressao.
+
+Pediu ativacao de novo em outro computador
+- Corrigido: a ativacao agora fica registrada no banco (Supabase) e
+  vale para qualquer PC/navegador do cliente.
+- Para isso funcionar, rode o supabase-setup.sql atualizado (que cria
+  a tabela "licencas" com a liberacao correta).
+
+Backup automatico do Supabase
+- No plano GRATUITO o Supabase NAO faz backup automatico.
+- Use o menu "Backup" do sistema regularmente.
+
+====================================================================

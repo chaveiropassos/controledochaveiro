@@ -1,0 +1,34 @@
+====================================================================
+ CONTROLE DO CHAVEIRO — VERSÃO ONLINE — LEIA PRIMEIRO
+====================================================================
+
+Você recebeu o seu Controle do Chaveiro. Comece por aqui.
+
+ORDEM RECOMENDADA (siga o GUIA-INSTALACAO.txt — passo a passo completo):
+1. Crie seu banco no Supabase e rode o arquivo "01-criar-banco.sql"
+   (está aqui nesta pasta) no SQL Editor.
+2. Cole a URL e a chave (publishable) do Supabase no "configuracao.js"
+   (arquivo separado da configuração; você preenche uma vez).
+3. Publique a PASTA (com o index.html E o configuracao.js juntos) no Netlify.
+4. No primeiro acesso: ative pelo WhatsApp da MyKey, entre com
+   admin / admin123, TROQUE a senha em Funcionários e preencha os
+   dados da empresa em Configurações.
+5. Faça seu primeiro BACKUP (tela "Backup").
+
+>> Já usa o sistema e só quer atualizar para a versão nova?
+   Siga o GUIA-ATUALIZACAO.txt (não apaga seus dados).
+
+ARQUIVOS DESTA PASTA:
+- index.html ............. o sistema (vai pro Netlify)
+- configuracao.js ........ SUA URL e chave do Supabase (preencher uma vez;
+                          NÃO é trocado nas atualizações)
+- 01-criar-banco.sql ..... cria o banco NOVO (rodar no Supabase)
+- 02-atualizar-banco.sql . atualiza um banco que já existe (não apaga dados)
+- GUIA-INSTALACAO.txt ..... passo a passo de instalação (comece por ele)
+- GUIA-ATUALIZACAO.txt .... passo a passo para atualizar a versão
+- MANUAL-DE-USO.txt ....... como usar o sistema no dia a dia
+- BACKUP.txt ............. como fazer e restaurar o backup
+- PROBLEMAS-COMUNS.txt ... soluções para problemas frequentes
+
+Dúvidas? WhatsApp da MyKey: (35) 99901-8000.
+====================================================================

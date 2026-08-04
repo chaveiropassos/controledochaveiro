@@ -1,0 +1,81 @@
+SUITE DE TESTES DE COMPORTAMENTO — Controle do Chaveiro (versão online)
+========================================================================
+
+O QUE É
+-------
+Testes que carregam o index.html num navegador de mentira (jsdom) com o
+<script> do app RODANDO DE VERDADE, e verificam o COMPORTAMENTO da tela:
+formulários renderizados, recálculo de desconto, campos que somem, etc.
+
+Isso pega uma classe de erro que o `node --check` NÃO pega. Foi criada por
+causa de um bug real que foi ao ar: o campo de DESCRIÇÃO e o campo de
+DESCONTO da OS tinham o MESMO id (id="osDesc"). Como é HTML/JS válido, o
+`node --check` passou. Mas o document.getElementById("osDesc") devolve o
+PRIMEIRO elemento (a descrição), então o desconto nunca recalculava. Ninguém
+tinha testado o comportamento.
+
+>>> ANTES DE EMPURRAR QUALQUER MUDANÇA NO FRONT (index.html), RODE ESTA SUITE. <<<
+    Foi exatamente esse passo que faltou e deixou o bug ir para produção.
+
+
+COMO RODAR
+----------
+    cd testes
+    npm install     (só na primeira vez — baixa o jsdom)
+    npm test
+
+Precisa de Node instalado (usa o test runner nativo: node --test).
+Nenhuma chamada de rede acontece — o Supabase, XLSX e QRCode são dublados.
+
+
+O QUE CADA TESTE COBRE
+----------------------
+(a) SEM ID DUPLICADO POR FORMULÁRIO/MODAL
+    Para cada formulário (osForm, chaveForm, clienteForm, funcForm, txForm,
+    fabForm, catForm, eqForm) e para a tela de PDV (pagePDV), renderiza e
+    confere que NÃO existe id repetido dentro dele. É este teste que aponta o
+    "osDesc" duplicado.
+
+(b) DESCONTO DA OS RECALCULA
+    Abre a OS, coloca subtotal (mão de obra) e digita um desconto (em R$ e em
+    %), dispara o osRecalc e confere que o Total = subtotal − desconto (não
+    fica igual ao subtotal). Se o desconto não recalcula, falha.
+
+(b') DESCONTO DO PDV RECALCULA
+    Mesmo raciocínio na Venda Rápida.
+
+(c) CAMPOS DE SERVIÇO
+    No cadastro de produto, ao escolher tipo "serviço", os campos de custo e
+    estoque somem (chaveAtualizarCamposServico).
+
+(smoke) CADA PÁGINA E CADA FORMULÁRIO ABRE SEM LANÇAR EXCEÇÃO
+    pageDashboard, pagePDV, pageChaves, pageClientes, pageServicos,
+    pageFabricantes, pageCategorias, pageEquivalencias, pageEstoque,
+    pageFinanceiro, pageRelatorios, pageTipos, pageFuncionarios,
+    pageConfiguracoes — e os 8 formulários-modal abrindo e fechando.
+
+
+ARQUIVOS
+--------
+    ambiente.js            monta o DOM jsdom, injeta os dublês (Supabase/XLSX/
+                           QRCode/alert/confirm/crypto), semeia o CACHE.
+    comportamento.test.js  os testes em si.
+    package.json           dependência (jsdom) e o script `npm test`.
+
+
+COMO O SUPABASE É DUBLADO
+-------------------------
+Em ambiente.js, antes de o app carregar, injetamos:
+    window.supabase = { createClient: () => clienteFake }
+onde clienteFake.from(...) devolve um objeto ENCADEÁVEL: select/eq/order/
+limit/insert/update/delete/upsert/in/filter/... todos devolvem o próprio
+objeto, e o objeto é "aguardável" (tem .then) resolvendo { data: [], error:
+null }. maybeSingle()/single() resolvem { data: null, error: null }. Assim o
+boot do app funciona sem tocar em rede. Também injetamos SUPABASE_URL/KEY
+fake (para não cair no alerta de configuração pendente), XLSX/QRCode inertes,
+alert/confirm (confirm devolve true) e crypto.subtle/TextEncoder para o boot
+da tela de ativação não quebrar.
+
+Obs.: CACHE e SESSAO são `let` no topo do <script> do app — em navegador NÃO
+viram window.CACHE. Por isso a suíte os semeia via window.eval, que roda no
+mesmo escopo léxico e enxerga essas variáveis.

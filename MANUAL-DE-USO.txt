@@ -1,0 +1,52 @@
+====================================================================
+CONTROLE DO CHAVEIRO (MyKey) - MANUAL DE USO
+====================================================================
+
+PRIMEIRO ACESSO
+- Abra o site. Na primeira vez, faca a ATIVACAO (codigo pela MyKey),
+  aceite o Termo de Uso e ative.
+- Login inicial:  usuario: admin   senha: admin123
+- Importante: depois de ativado, qualquer computador ou navegador do
+  cliente entra direto, sem pedir ativacao de novo.
+
+CONFIGURACOES (faca isso primeiro!)
+- Menu "Configuracoes" > preencha Nome da empresa, CNPJ, Telefone e
+  Endereco. Esses dados aparecem nos recibos e orcamentos.
+- O nome da empresa tambem passa a aparecer no topo do sistema.
+
+PAINEL
+- Resumo do dia/mes: vendas, faturamento, a receber, estoque baixo.
+
+VENDA RAPIDA (balcao)
+- Digite ou bipe o codigo da chave e tecle Enter.
+- Pode buscar pela descricao tambem.
+- Cliente e opcional. Da para CRIAR um cliente na hora (botao "+ Novo cliente").
+- Finalize e imprima o cupom.
+
+ORDENS DE SERVICO
+- Crie OS com cliente, itens, mao de obra, status e pagamento.
+- Da para CRIAR cliente e CRIAR chave/produto na hora, sem sair da tela.
+- Valores monetarios usam formato 0,00 (reais).
+- Imprima Orcamento ou Recibo (abre um documento limpo, so para imprimir/PDF).
+
+CLIENTES
+- Cadastro com CEP (preenche endereco automatico), bairro, cidade e estado.
+
+CHAVES / FABRICANTES / ESTOQUE
+- Catalogo de chaves, fabricantes e movimentacoes de estoque.
+- Em Estoque, busque digitando codigo ou nome da chave.
+
+FINANCEIRO / RELATORIOS
+- Lancamentos de entrada/saida e relatorios por periodo, funcionario
+  e chaves mais vendidas.
+
+FUNCIONARIOS (admin)
+- Cadastre operadores e administradores. Troque a senha do admin!
+
+BACKUP (admin)
+- Menu "Backup": baixe seus dados em JSON, Excel ou SQL.
+- Restaure a partir de um arquivo JSON, sem usar o painel do Supabase.
+- Faca backup com frequencia (no plano gratuito do Supabase NAO ha
+  backup automatico).
+
+====================================================================

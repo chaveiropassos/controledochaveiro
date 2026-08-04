@@ -1,0 +1,149 @@
+====================================================================
+ CONTROLE DO CHAVEIRO — GUIA DE INSTALAÇÃO (versão online)
+====================================================================
+
+Bem-vindo! Este guia leva você, do zero, a deixar o seu Controle do
+Chaveiro funcionando no navegador. Não precisa instalar programa: o
+sistema roda numa página na internet, só sua.
+
+O que você vai fazer (uns 15 minutos):
+  1. Criar seu banco de dados (gratuito, no Supabase)
+  2. Configurar o sistema com os dados do seu banco
+  3. Publicar a página (gratuito, no Netlify)
+  4. Ativar com a MyKey
+  5. Entrar, trocar a senha e cadastrar sua empresa
+  6. Fazer o primeiro backup
+
+Cada chaveiro tem o PRÓPRIO banco e a PRÓPRIA página — seus dados são
+só seus, ninguém mais vê.
+
+>> Já usa o sistema e só quer atualizar? Não use este guia.
+   Use o GUIA-ATUALIZACAO.txt (ele não apaga seus dados).
+
+--------------------------------------------------------------------
+PASSO 1 — CRIAR O BANCO DE DADOS (Supabase, grátis)
+--------------------------------------------------------------------
+O banco é onde ficam seus clientes, produtos e vendas.
+1. Acesse https://supabase.com e crie uma conta (com seu e-mail ou com
+   uma conta do GitHub).
+2. Clique em "New Project". Dê um nome (ex.: chaveiro-do-joao).
+3. Crie uma SENHA do banco e ANOTE — você vai precisar dela depois.
+   Em região, escolha "South America (São Paulo)".
+4. Aguarde 1 a 2 minutos até o projeto ficar pronto.
+5. No menu da esquerda, clique em "SQL Editor".
+6. Abra o arquivo "01-criar-banco.sql" (veio nesta pasta) num bloco de
+   notas, copie TODO o conteúdo, cole no SQL Editor e clique em "Run".
+7. Deve aparecer "Success". Pronto: seu banco está criado e já vazio,
+   esperando seus dados.
+
+--------------------------------------------------------------------
+PASSO 2 — PEGAR OS DADOS DE CONEXÃO
+--------------------------------------------------------------------
+Você precisa de 2 coisas do Supabase: a URL do projeto e a chave pública.
+Logo depois que o projeto é criado, abre a página inicial dele
+("Project overview"). Nela há uma CAIXA SUSPENSA de conexão — abra essa
+caixa e copie de lá os dois dados, já prontos:
+
+   A) Project URL — fica assim: https://xxxxxxxx.supabase.co
+   B) Chave Publishable — começa com: sb_publishable_...
+
+ATENÇÃO:
+- NÃO use a "Database URL"/"Connection string" (a que começa com "db..."
+  ou "postgres://") — essa é outra coisa e não funciona aqui.
+- NUNCA use a "Secret key" (sb_secret_...) — só a Publishable.
+
+--------------------------------------------------------------------
+PASSO 3 — CONFIGURAR O SISTEMA
+--------------------------------------------------------------------
+1. Abra o arquivo "configuracao.js" num editor de texto (o Bloco de Notas
+   serve). ATENÇÃO: é o "configuracao.js", NÃO o "index.html".
+2. Ache estas duas linhas:
+      window.SUPABASE_URL = 'COLE_AQUI_A_URL_DO_PROJETO'
+      window.SUPABASE_KEY = 'COLE_AQUI_A_PUBLISHABLE_KEY'
+3. Cole a URL (Passo 2-A) e a chave Publishable (Passo 2-B) entre as aspas.
+4. Salve o arquivo.
+
+   POR QUE NUM ARQUIVO SEPARADO? Assim, quando sair uma ATUALIZAÇÃO, você
+   troca só o index.html (e roda o SQL) e a sua chave continua aqui no
+   configuracao.js — não precisa preencher de novo.
+
+--------------------------------------------------------------------
+PASSO 4 — PUBLICAR A PÁGINA (Netlify, grátis)
+--------------------------------------------------------------------
+1. Acesse https://app.netlify.com e crie uma conta (com e-mail, Google ou GitHub).
+2. Na área de "deploy" (arrastar e soltar), arraste a PASTA INTEIRA do
+   sistema (com o index.html E o configuracao.js juntos, na mesma pasta) —
+   não arraste só o index.html, senão a sua configuração não vai junto.
+3. O Netlify cria um endereço aleatório (ex.: https://abc123.netlify.app).
+4. Para o endereço ficar com a sua cara: "Site configuration" >
+   "Change site name" > escolha um nome (ex.: chaveiro-do-joao). O endereço
+   vira https://chaveiro-do-joao.netlify.app.
+5. Esse é o endereço do SEU sistema. Salve nos favoritos.
+
+--------------------------------------------------------------------
+PASSO 5 — ATIVAR O SISTEMA (com a MyKey)
+--------------------------------------------------------------------
+Ao abrir seu endereço pela primeira vez, aparece a tela de Ativação
+(a liberação é feita uma única vez):
+1. Clique em "💬 Enviar código pelo WhatsApp" — isso manda o seu código
+   de instalação para o WhatsApp da MyKey: (35) 99901-8000.
+2. Aguarde a MyKey responder com o CÓDIGO DE LIBERAÇÃO.
+3. Cole o código de liberação no campo indicado.
+4. Confirme seus dados (nome, cidade, WhatsApp).
+5. Leia e aceite o Termo de Uso e clique em ATIVAR.
+Pronto — a ativação fica guardada; você não precisa repetir.
+
+--------------------------------------------------------------------
+PASSO 6 — PRIMEIRO ACESSO E TROCA DE SENHA (importante!)
+--------------------------------------------------------------------
+O sistema já vem com um usuário pronto:
+      Usuário:  admin
+      Senha:    admin123
+1. Entre com esse usuário e senha.
+2. TROQUE A SENHA AGORA: vá em "⚙️ Funcionários", abra o admin e defina
+   uma senha sua. (A senha padrão é conhecida — trocar é essencial para
+   ninguém entrar no seu sistema.)
+3. Se tiver atendentes, cadastre cada um em "Funcionários" com a permissão
+   certa (operador vê menos, administrador vê tudo).
+
+--------------------------------------------------------------------
+PASSO 7 — DADOS DA SUA EMPRESA
+--------------------------------------------------------------------
+Vá em "Configurações" e preencha nome, CNPJ/CPF, telefone e endereço.
+Esses dados aparecem nos RECIBOS e ORÇAMENTOS que você imprime/envia.
+(Se quiser, dá para colocar a logo da loja também.)
+
+--------------------------------------------------------------------
+PASSO 8 — BACKUP DOS SEUS DADOS (faça sempre!)
+--------------------------------------------------------------------
+IMPORTANTE: o plano gratuito do Supabase NÃO faz backup automático.
+Guardar uma cópia é responsabilidade sua — e é fácil:
+1. Entre como administrador e clique em "Backup" no menu.
+2. Clique em "Exportar" e escolha JSON (recomendado — é o que o próprio
+   sistema consegue restaurar depois). O arquivo baixa no seu computador.
+3. Guarde esse arquivo em local seguro (pen drive, nuvem, e-mail).
+4. Faça isso com frequência — pelo menos uma vez por semana.
+PARA RESTAURAR (se precisar): tela "Backup" > "Restaurar" > escolha o
+arquivo JSON que você salvou. Mais detalhes no arquivo BACKUP.txt.
+
+--------------------------------------------------------------------
+O QUE TEM NO SISTEMA (para você se localizar)
+--------------------------------------------------------------------
+- Painel: resumo do dia (vendas, caixa).
+- Venda Rápida (PDV): vender no balcão e gerar recibo.
+- Serviços / Ordens de Serviço: orçamento e serviço, com recibo e orçamento.
+- Clientes: cadastro de clientes.
+- Produtos e Estoque: cadastro, preços e controle de estoque.
+- Equivalência de Chaves: consulta de equivalência entre fabricantes.
+- Fabricantes e Categorias: organização do catálogo.
+- Financeiro e Relatórios: entradas, saídas e relatórios.
+- Funcionários: usuários e permissões.
+- Configurações: dados da empresa e logo.
+- Backup: exportar e restaurar seus dados.
+
+--------------------------------------------------------------------
+PROBLEMAS?
+--------------------------------------------------------------------
+Veja o arquivo PROBLEMAS-COMUNS.txt ou chame a MyKey no WhatsApp
+(35) 99901-8000.
+====================================================================

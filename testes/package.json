@@ -1,0 +1,14 @@
+{
+  "name": "controle-chaveiro-testes",
+  "version": "1.0.0",
+  "description": "Suite de testes de comportamento (jsdom) do index.html do Controle do Chaveiro",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^9.6.1",
+    "c8": "^12.0.0",
+    "jsdom": "^24.1.3"
+  }
+}

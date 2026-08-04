@@ -1,0 +1,102 @@
+NOVIDADES DO CONTROLE DO CHAVEIRO  —  atualização de 31 de julho de 2026
+(versão online / navegador)   —   ATUALIZAÇÃO GRATUITA
+
+O que mudou nesta atualização:
+
+PAINEL AGORA RESPEITA O CONTROLE DE ACESSO
+   O Painel (dashboard) deixou de aparecer para quem não deveria ver.
+   Agora ele é um módulo controlado como os outros: só quem tem o
+   acesso liberado entra. E os valores de faturamento/receita são uma
+   permissão à parte — por padrão, quem não é administrador NÃO vê os
+   valores. Ao descartar uma venda rápida, o sistema não cai mais no
+   Painel restrito: volta para a primeira tela que o funcionário pode ver.
+
+ORDEM DE SERVIÇO PAGA SEMPRE GERA LANÇAMENTO
+   Se o lançamento financeiro de uma OS falhasse, o erro passava
+   despercebido e a OS ficava paga sem aparecer no caixa. Agora, se o
+   lançamento falhar, o sistema avisa na hora (não deixa passar em
+   silêncio). E o Relatório passou a conferir e sinalizar automaticamente
+   qualquer OS paga que tenha ficado sem lançamento, para você regularizar.
+
+--------------------------------------------------------------------------
+
+NOVIDADES DO CONTROLE DO CHAVEIRO  —  atualização de julho de 2026
+(versão online / navegador)
+
+O que mudou nesta versão:
+
+ESTOQUE DA ORDEM DE SERVIÇO  —  baixa e devolução corrigidas
+   Ao DAR BAIXA numa ordem de serviço, o estoque das peças agora abaixa
+   de verdade. E ao CANCELAR uma OS que já estava concluída, as peças
+   voltam para o estoque automaticamente (antes não voltavam).
+
+DESCONTO NO TOTAL
+   Dá para aplicar um desconto no total — tanto na venda rápida (PDV)
+   quanto na ordem de serviço.
+
+COMISSÃO DO VENDEDOR
+   Cada funcionário pode ter um percentual de comissão sobre as vendas dele.
+
+FOTOS
+   Você pode anexar uma imagem ao produto (aparece como miniatura na lista
+   e na venda rápida) e também fotos ao pedido/ordem de serviço.
+
+FIADO / PENDENTE
+   O valor já pago de uma venda fiado/pendente pode ser editado depois.
+
+RELATÓRIO E FECHAMENTO DE CAIXA
+   O relatório agora tem filtros por funcionário e por forma de pagamento,
+   e o fechamento de caixa separa o que veio de ordem de serviço do que
+   veio de venda.
+
+FALTA DE INTERNET NÃO CAI MAIS NA TELA DE ATIVAÇÃO
+   Quando é só a conexão que falhou, o sistema avisa "sem conexão" em vez
+   de pedir para ativar de novo.
+
+NOME E CÓDIGO DE BARRAS SEPARADOS
+   O código lido pelo leitor não se confunde mais com o nome do produto —
+   a identificação fica no Nome; o código de barras é um campo à parte.
+
+HISTÓRICO DA ORDEM DE SERVIÇO
+   Cada OS mostra uma linha do tempo com o que aconteceu (aberta, concluída,
+   cancelada, pagamentos).
+
+TIPOS DE PRODUTO EDITÁVEIS
+   Agora VOCÊ cria e edita os tipos de produto (chave, fechadura, serviço,
+   gás... e os que quiser). Deixaram de ser uma lista fixa: use a tela
+   "Tipos de Produto" para adicionar o que precisar — sem depender de uma
+   nova versão do sistema.
+
+QUANDO O TIPO É "SERVIÇO", SEM CUSTO NEM ESTOQUE
+   Ao marcar um produto como serviço, os campos de preço de custo e de
+   estoque somem — serviço não tem estoque para controlar.
+
+VALOR TOTAL EM ESTOQUE
+   Na tela de estoque aparece o valor total dos produtos que você tem em
+   estoque — ao custo e a preço de venda.
+
+CONFIGURAÇÃO SEPARADA (não perde a chave ao atualizar)
+   Os dados do seu Supabase (endereço e chave) agora ficam num arquivo à
+   parte, o "configuracao.js", preenchido UMA vez. Nas próximas atualizações
+   você troca só o index.html e a sua configuração é preservada — não precisa
+   colar a chave de novo.
+
+------------------------------------------------------------------
+IMPORTANTE — ATUALIZE O BANCO DE DADOS
+
+Esta versão usa a versão 6 do banco.
+
+  • ATUALIZANDO de uma versão anterior:
+      rode o arquivo  02-atualizar-banco.sql  no Supabase (aba SQL).
+      Pode rodar sem medo mesmo que já tenha rodado antes.
+      O próprio sistema avisa se o banco estiver desatualizado.
+
+  • INSTALAÇÃO NOVA:
+      rode apenas o  01-criar-banco.sql.
+
+Passo a passo nos guias  GUIA-ATUALIZACAO.txt  e  GUIA-INSTALACAO.txt.
+------------------------------------------------------------------
+
+Lembrete: cada chaveiro usa o SEU próprio projeto Supabase. Preencha o
+endereço e a chave do seu Supabase no arquivo "configuracao.js" (uma vez;
+instruções no próprio arquivo e no GUIA-INSTALACAO.txt).

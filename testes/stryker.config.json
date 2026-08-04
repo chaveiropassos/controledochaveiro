@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "_comment": "Mutação da lógica de negócio PURA (logica-negocio.js), extraída verbatim do index.html canônico. As funções com DOM/async ficam de fora do Stryker por causa da arquitetura de <script> inline (ver logica-negocio.js e o relatório); elas são cobertas pela suíte de comportamento em jsdom.",
+  "packageManager": "npm",
+  "reporters": ["clear-text", "progress", "json"],
+  "testRunner": "command",
+  "commandRunner": {
+    "command": "CAMINHO_INDEX_TESTE=/tmp/index_canonico.html node --test logica-negocio.test.js"
+  },
+  "mutate": ["logica-negocio.js"],
+  "coverageAnalysis": "off",
+  "concurrency": 4,
+  "timeoutMS": 20000
+}
