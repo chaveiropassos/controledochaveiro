@@ -5558,7 +5558,7 @@ compreendeu e concorda integralmente com este Termo.</pre
         </select></div>
     </div>
     <div class="field"><label>Título *</label><input id="osTitulo" value="${esc(s.titulo || "")}" placeholder="ex: Cópia de chave / abertura de porta"></div>
-    <div class="field"><label>Descrição</label><textarea id="osDesc" rows="2">${esc(s.descricao || "")}</textarea></div>
+    <div class="field"><label>Descrição</label><textarea id="descricaoDaOrdemDeServico" rows="2">${esc(s.descricao || "")}</textarea></div>
     <div class="row">
       <div class="field"><label>Veículo (auto)</label><input id="osVeiculo" value="${esc(s.veiculo || "")}" placeholder="ex: Gol 2018 ABC1D23"></div>
       <div class="field"><label>Endereço (atend.)</label>
@@ -5580,8 +5580,8 @@ compreendeu e concorda integralmente com este Termo.</pre
         </select></div>
       <div class="field"><label>Desconto</label>
         <div style="display:flex;gap:6px">
-          <input id="osDesc" type="number" step="0.01" min="0" value="${s.desconto || 0}" oninput="osRecalc()" style="flex:1">
-          <select id="osDescTipo" onchange="osRecalc()" style="width:64px"><option value="reais">R$</option><option value="pct">%</option></select>
+          <input id="descontoDaOrdemDeServico" type="number" step="0.01" min="0" value="${s.desconto || 0}" oninput="osRecalc()" style="flex:1">
+          <select id="modalidadeDeDescontoDaOrdemDeServico" onchange="osRecalc()" style="width:64px"><option value="reais">R$</option><option value="pct">%</option></select>
         </div>
       </div>
       <div class="field"><label>Total</label><input id="osTotal" disabled value="R$ 0,00"></div>
@@ -5775,8 +5775,8 @@ compreendeu e concorda integralmente com este Termo.</pre
       }
       // Desconto da OS em reais, a partir do campo (R$ ou %). Nunca passa do subtotal.
       function osDescontoValor(subtotal) {
-        const valor = parseFloat($("osDesc")?.value) || 0
-        const tipo = $("osDescTipo")?.value || "reais"
+        const valor = parseFloat($("descontoDaOrdemDeServico")?.value) || 0
+        const tipo = $("modalidadeDeDescontoDaOrdemDeServico")?.value || "reais"
         let desconto = tipo === "pct" ? (subtotal * valor) / 100 : valor
         if (desconto < 0) desconto = 0
         if (desconto > subtotal) desconto = subtotal
@@ -5831,7 +5831,7 @@ compreendeu e concorda integralmente com este Termo.</pre
             : null,
           tipo: $("osTipo").value,
           titulo: titulo,
-          descricao: $("osDesc").value,
+          descricao: $("descricaoDaOrdemDeServico").value,
           veiculo: $("osVeiculo").value,
           endereco: $("osEndereco").value,
           status: status,
