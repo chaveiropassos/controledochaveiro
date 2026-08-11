@@ -5050,21 +5050,30 @@ compreendeu e concorda integralmente com este Termo.</pre
       })
 
       // --- carrinho ---
+      // Normaliza texto para busca: minúsculo e sem acento (comparação por substring).
+      function normalizarBusca(texto) {
+        return (texto || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[̀-ͯ]/g, "")
+      }
       function pdvScan() {
         const input = $("pdvCode")
         const term = input.value.trim()
         if (!term) return
-        const termLow = term.toLowerCase()
-        let matches = CACHE.chaves.filter(
-          (k) => (k.codigo || "").toLowerCase() === termLow,
+        const termoNormalizado = normalizarBusca(term)
+        // Busca por SUBSTRING em código, descrição E fabricante (sem acento,
+        // sem diferenciar maiúsculas). Um só passo: lista TODOS os itens que
+        // casam — não damos atalho para o código exato, senão itens cujo termo
+        // só aparece na descrição (ex.: código vazio) ficariam invisíveis.
+        const matches = CACHE.chaves.filter(
+          (k) =>
+            normalizarBusca(k.codigo).includes(termoNormalizado) ||
+            normalizarBusca(k.descricao).includes(termoNormalizado) ||
+            normalizarBusca(nomeFabricante(k.fabricante_id)).includes(
+              termoNormalizado,
+            ),
         )
-        if (!matches.length) {
-          matches = CACHE.chaves.filter(
-            (k) =>
-              (k.codigo || "").toLowerCase().includes(termLow) ||
-              (k.descricao || "").toLowerCase().includes(termLow),
-          )
-        }
         if (!matches.length) {
           toast("Código não encontrado: " + term, "err")
           input.select()
