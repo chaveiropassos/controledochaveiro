@@ -5824,7 +5824,9 @@ compreendeu e concorda integralmente com este Termo.</pre
         else if (pago > 0 && pago < total && statusPag === "pendente")
           statusPag = "parcial"
         const status = $("osStatus").value
-
+        if (statusPag === "pago" && pago < total) {
+          pago = total
+        }
         const dados = {
           cliente_id: $("osClienteVal").value
             ? parseInt($("osClienteVal").value)
