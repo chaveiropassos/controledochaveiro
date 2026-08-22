@@ -4720,6 +4720,10 @@ compreendeu e concorda integralmente com este Termo.</pre
         _cepTimer = setTimeout(async () => {
           try {
             const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            if (!r.ok) {
+              toast("Erro ao buscar CEP (HTTP " + r.status + ")", "err")
+              return
+            }
             const d = await r.json()
             if (d.erro) {
               toast("CEP não encontrado", "err")
