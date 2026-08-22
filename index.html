@@ -5817,7 +5817,7 @@ compreendeu e concorda integralmente com este Termo.</pre
         const subtotal = maoObra + itens.reduce((s, it) => s + it.total, 0)
         const desconto = osDescontoValor(subtotal)
         const total = subtotal - desconto
-        const pago = parseMoeda($("osValorPago").value || 0)
+        let pago = parseMoeda($("osValorPago").value || 0)
         let statusPag = $("osStatusPag").value
         if (pago >= total && total > 0 && statusPag === "pendente")
           statusPag = "pago"
