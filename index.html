@@ -10402,6 +10402,7 @@ compreendeu e concorda integralmente com este Termo.</pre
         <h3 style="font-size:13px;color:#1e25c4;text-transform:uppercase;border-bottom:1px solid #ddd;padding-bottom:4px;margin-bottom:6px">Serviço (${esc(s.tipo)})</h3>
         <div><strong>${esc(s.titulo)}</strong></div>
         ${s.veiculo ? `<div>Veículo: ${esc(s.veiculo)}</div>` : ""}
+        ${s.endereco ? `<div>Endereço de atendimento: ${esc(s.endereco)}</div>` : ""}
         ${s.descricao ? `<div style="margin-top:6px">${esc(s.descricao)}</div>` : ""}
       </div>
       <div style="margin:14px 0">
