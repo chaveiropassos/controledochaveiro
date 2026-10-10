@@ -8159,7 +8159,7 @@ compreendeu e concorda integralmente com este Termo.</pre
       <div><strong>Pagamento:</strong> <span class="badge b-${s.status_pagamento}">${s.status_pagamento}</span></div>
     </div>
     <div style="margin-top:8px"><strong>Funcionário:</strong> ${esc(nomeFuncionario(s.funcionario_id) || "-")}</div>
-    ${s.descricao ? `<p style="margin-top:10px;color:var(--muted)">${esc(s.descricao)}</p>` : ""}
+    ${s.descricao ? `<p style="margin-top:10px;color:var(--muted);white-space:pre-line">${esc(s.descricao)}</p>` : ""}
     ${s.veiculo ? `<p style="margin-top:4px"><strong>Veículo:</strong> ${esc(s.veiculo)}</p>` : ""}
     ${s.endereco ? `<p><strong>Endereço:</strong> ${esc(s.endereco)}</p>` : ""}
     <div id="osViewFotos" style="margin-top:10px"></div>
@@ -8524,6 +8524,9 @@ compreendeu e concorda integralmente com este Termo.</pre
         m += `\nCliente: ${c?.nome || "Consumidor"}`
         m += `\nServiço: ${s.titulo}`
         if (s.veiculo) m += `\nVeículo: ${s.veiculo}`
+        if (s.endereco) {
+          m += `\nEndereço de atendimento: ${s.endereco}`
+        }
         m += `\n\n*Itens:*`
         ;(s.itens || []).forEach((it) => {
           m += `\n• ${it.descricao} — ${it.quantidade}x ${fmt(it.preco_unit)} = ${fmt(it.total)}`
@@ -10403,7 +10406,7 @@ compreendeu e concorda integralmente com este Termo.</pre
         <div><strong>${esc(s.titulo)}</strong></div>
         ${s.veiculo ? `<div>Veículo: ${esc(s.veiculo)}</div>` : ""}
         ${s.endereco ? `<div>Endereço de atendimento: ${esc(s.endereco)}</div>` : ""}
-        ${s.descricao ? `<div style="margin-top:6px">${esc(s.descricao)}</div>` : ""}
+        ${s.descricao ? `<div style="margin-top:6px;white-space:pre-line">${esc(s.descricao)}</div>` : ""}
       </div>
       <div style="margin:14px 0">
         <h3 style="font-size:13px;color:#1e25c4;text-transform:uppercase;border-bottom:1px solid #ddd;padding-bottom:4px;margin-bottom:6px">Itens</h3>
